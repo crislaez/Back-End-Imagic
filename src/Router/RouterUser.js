@@ -2,7 +2,7 @@
 
 const Database = require('../Database/Query');
 const multipart = require('connect-multiparty');
-const multipartMiddleware = multipart({uploadDir: './img'}) // ./img es para carpeta donde se subira la foto
+const multipartMiddleware = multipart({uploadDir: __dirname + '/../img'}) // ./img es para carpeta donde se subira la foto
 
 function endPointUser(router){
 
@@ -27,7 +27,7 @@ function endPointUser(router){
                 nombre_usuario:req.body.nombre_usuario,
                 correo:req.body.correo,
                 clave:req.body.clave,
-                avatar:'ttp://localhost:3001/img/'+aux[1]
+                avatar:'http://localhost:3001/img/'+aux[8]
             };
         
         Database.addUser(user, (err, data) => {
@@ -35,6 +35,34 @@ function endPointUser(router){
             if(!data) return res.status(404).json({message: `error al devolver los datos`});
 
             res.status(200).json({success:true, data:data});
+        })
+    });
+
+    //login ruta -> http://localhost:3001/api/login
+    router.post('/login', (req, res) => {
+        let user = 
+            {
+                correo:req.body.correo,
+                clave:req.body.clave
+            }
+
+        Database.login(user, (err, data) => {
+            if(err) return res.status(500).json({message: `error al realizar la peticion: ${err}`});
+            if(!data) return res.status(404).json({message: `error al devolver los datos`});
+            
+            res.status(200).json({success:true, data:data});
+        })
+    });
+    
+    //usuario por ide ruta -> http://localhost:3001/api/addUserById/:id
+    router.get('/addUserById/:id', (req, res) => {
+        let id = req.params.id;
+
+        Database.addUserById(id, (err, data) => {
+            if(err) return res.status(500).json({message: `error al realizar la peticion: ${err}`});
+            if(!data) return res.status(404).json({message: `error al devolver los datos`});
+            
+            res.status(200).json({success:true, data:data})
         })
     })
 }

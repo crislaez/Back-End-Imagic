@@ -32,6 +32,7 @@ const addUser = (user, callback) => {
     // conexion.end();
 }
 
+//login
 const login = (user, callback) => {
     // conexion.connect();
     if(conexion){
@@ -46,9 +47,25 @@ const login = (user, callback) => {
     // conexion.end();
 }
 
+//buscar usuario por ide
+const addUserById = (id, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`SELECT * FROM usuarios WHERE id_usuario = ${conexion.escape(id)}`, (err, res) => {
+            if(err){
+                console.log(err.code);
+            }else{
+                callback(null, res);
+            }
+        })
+    }
+    // conexion.end();
+} 
+
 module.exports = 
     {
         getAllUser,
         addUser,
-        login
+        login,
+        addUserById
     }
