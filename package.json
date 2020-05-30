@@ -1,0 +1,21 @@
+{
+  "name": "back_end_imagic",
+  "version": "1.0.0",
+  "description": "back end imagic",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Crislaez",
+  "license": "MIT",
+  "dependencies": {
+    "connect-multiparty": "^2.2.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
