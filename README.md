@@ -11,7 +11,7 @@ IMAGIC es una red social para subir tus mejores fotos
 ### Que hace el proyecto
 
 IMAGIC es una red social de fotos donde los usuarios pueden subir sus fotos mejores fotos, poder comentar
-, escribir por privado, otros usuarios tambien pueden comentar y dar su feedback (back-end echo con Node.js)
+, escribir por privado, otros usuarios tambien pueden comentar y dar su feedback (back-end hecho con Node.js)
  
 ### Donde pueden recibir ayuda los usuarios con el proyecto
  
