@@ -107,6 +107,21 @@ const getAllImagenes = (callback) => {
     // conexion.end();
 }
 
+//obtener foto por ide
+const getImagenByIdImagen = (id, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`SELECT * FROM fotos WHERE id_foto = ${conexion.escape(id)}`, (err, res) => {
+            if(err){
+                console.log(err.code);
+            }else{
+                callback(null, res);
+            }
+        })
+    }
+    // conexion.end();
+}
+
 module.exports = 
     {
         getAllUser,
@@ -115,5 +130,6 @@ module.exports =
         getUserById,
         addImagen,
         getImagenesById,
-        getAllImagenes
+        getAllImagenes,
+        getImagenByIdImagen
     }

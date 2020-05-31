@@ -22,7 +22,7 @@ function endPointImages(router){
             if(err) return res.status(500).json({message: `error al realizar la peticion: ${err}`});
             if(!data) return res.status(404).json({message: `error al devolver los datos`});
 
-            res.status(200).json({success:true, data:data})
+            res.status(200).json({success:true, data:data});
         })
     });
 
@@ -34,7 +34,7 @@ function endPointImages(router){
             if(err) return res.status(500).json({message: `error al realizar la peticion: ${err}`});
             if(!data) return res.status(404).json({message: `error al devolver los datos`});
 
-            res.status(200).json({success:true, data:data})
+            res.status(200).json({success:true, data:data});
         })
     });
 
@@ -46,8 +46,19 @@ function endPointImages(router){
 
             res.status(200).json({success:true, data:data});
         })
-    })
+    });
 
+    //una imagen por ide imagen ruta -> http://localhost:3001/api/getimagenByIdImagen/:id
+    router.get('/getImagenByIdImagen/:id', (req, res) => {
+        let id = req.params.id;
+
+        Database.getImagenByIdImagen(id, (err, data) => {
+            if(err) return res.status(500).json({message: `error al realizar la peticion: ${err}`});
+            if(!data) return res.status(404).json({message: `error al devolver los datos`});
+
+            res.status(200).json({success:true, data:data});
+        })
+    })
 }
 
 module.exports = endPointImages;
