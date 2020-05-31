@@ -5,7 +5,9 @@ require('dotenv').config();
 
 const express = require('express');
 
+//endpoints
 const endPointUser = require('./Router/RouterUser');
+const endPointImages = require('./Router/RouterImages');
 
 const app = express();
 app.use(express.urlencoded({ extended:false }));
@@ -31,6 +33,7 @@ app.use('/api',router);
 
 //llamamos a la funcion donde estan todos los endpoin de los usuarios
 endPointUser(router);
+endPointImages(router);
 
 app.listen(process.env.PORT, () => {
     console.log(`Api Rest corriendo en ${process.env.PORT}`);

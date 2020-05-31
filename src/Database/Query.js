@@ -48,7 +48,7 @@ const login = (user, callback) => {
 }
 
 //buscar usuario por ide
-const addUserById = (id, callback) => {
+const getUserById = (id, callback) => {
     // conexion.connect();
     if(conexion){
         conexion.query(`SELECT * FROM usuarios WHERE id_usuario = ${conexion.escape(id)}`, (err, res) => {
@@ -62,10 +62,58 @@ const addUserById = (id, callback) => {
     // conexion.end();
 } 
 
+//ingresar imagen
+const addImagen = (imagen, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query('INSERT INTO fotos SET ?',imagen, (err, res) => {
+            if(err){
+                console.log(err.code);
+            }else{
+                callback(null, res)
+            }
+        })
+    }
+    // conexion.end();
+}
+
+//imagenes por usuario
+const getImagenesById = (id, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`SELECT * FROM fotos INNER JOIN usuarios ON fotos.id_usuario = usuarios.id_usuario WHERE fotos.id_usuario = ${conexion.escape(id)}`, (err, res) => {
+            if(err){
+                console.log(err.code);
+            }else{
+                callback(null, res);
+            }
+        })
+    }
+    // conexion.end();
+}
+
+//obtener todas las imagenes
+const getAllImagenes = (callback) => {
+    // conexion.changeUser();
+    if(conexion){
+        conexion.query(`SELECT * FROM fotos INNER JOIN usuarios ON fotos.id_usuario = usuarios.id_usuario`, (err, res) => {
+            if(err){
+                console.log(err.code);
+            }else{
+                callback(null, res);
+            }
+        })
+    }
+    // conexion.end();
+}
+
 module.exports = 
     {
         getAllUser,
         addUser,
         login,
-        addUserById
+        getUserById,
+        addImagen,
+        getImagenesById,
+        getAllImagenes
     }

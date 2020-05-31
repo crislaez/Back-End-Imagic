@@ -54,11 +54,11 @@ function endPointUser(router){
         })
     });
     
-    //usuario por ide ruta -> http://localhost:3001/api/addUserById/:id
-    router.get('/addUserById/:id', (req, res) => {
+    //usuario por ide ruta -> http://localhost:3001/api/getUserById/:id
+    router.get('/getUserById/:id', (req, res) => {
         let id = req.params.id;
 
-        Database.addUserById(id, (err, data) => {
+        Database.getUserById(id, (err, data) => {
             if(err) return res.status(500).json({message: `error al realizar la peticion: ${err}`});
             if(!data) return res.status(404).json({message: `error al devolver los datos`});
             
