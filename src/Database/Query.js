@@ -122,6 +122,36 @@ const getImagenByIdImagen = (id, callback) => {
     // conexion.end();
 }
 
+//agregar comentarios
+const addComent = (coment, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`INSERT INTO comentarios SET ?`,coment, (err, res) => {
+            if(err){
+                console.log(err.code);
+            }else{
+                callback(null, res);
+            }
+        })
+    }
+    // conexion.end();
+}
+
+//todos los comentarios por id comentario
+const getComentByIdImagen = (id, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`SELECT * FROM comentarios INNER JOIN fotos ON comentarios.id_foto = fotos.id_foto INNER JOIN usuarios ON comentarios.id_usuario = usuarios.id_usuario WHERE comentarios.id_foto = ${conexion.escape(id)}`,(err, res) => {
+            if(err){
+                console.log(err.code);
+            }else{
+                callback(null, res);
+            }
+        })
+    }
+    // conexion.end();
+}
+
 module.exports = 
     {
         getAllUser,
@@ -131,5 +161,7 @@ module.exports =
         addImagen,
         getImagenesById,
         getAllImagenes,
-        getImagenByIdImagen
+        getImagenByIdImagen,
+        addComent,
+        getComentByIdImagen
     }
