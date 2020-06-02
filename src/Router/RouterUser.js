@@ -64,6 +64,18 @@ function endPointUser(router){
             
             res.status(200).json({success:true, data:data})
         })
+    });
+
+    //usuario por ide ruta -> http://localhost:3001/api/getUserByUserName/:id
+    router.get('/getUserByUserName/:id', (req, res) => {
+        let nombre = req.params.id;
+
+        Database.getUserByUserName(nombre, (err, data) => {
+            if(err) return res.status(500).json({message: `error al realizar la peticion: ${err}`});
+            if(!data) return res.status(404).json({message: `error al devolver los datos`});
+
+            res.status(200).json({success:true, data:data})
+        })
     })
 }
 
