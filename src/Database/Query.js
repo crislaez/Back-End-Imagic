@@ -193,10 +193,26 @@ const deleteFollow = (follow, callback) => {
     // conexion.end();
 }
 
+//comprobar si 2 usuarios se siguen
 const checkFollow = (follow, callback) => {
     // conexion.connect();
     if(conexion){
         conexion.query(`SELECT * FROM seguir WHERE id_usuario_seguido = ${conexion.escape(follow.id_usuario_seguido)} AND id_usuario_seguidor = ${conexion.escape(follow.id_usuario_seguidor)}`, (err, res) => {
+            if(err){
+                console.log(err.code);
+            }else{
+                callback(null, res);
+            }
+        })
+    }
+    // conexion.end();
+}
+
+//cuantas publicaciones a hecho el usuario
+const countPublicacion = (id_usuario, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`SELECT COUNT(*) FROM fotos WHERE id_usuario = ${conexion.escape(id_usuario)}`, (err, res) => {
             if(err){
                 console.log(err.code);
             }else{
@@ -222,5 +238,6 @@ module.exports =
         getUserByUserName,
         addFollow,
         deleteFollow,
-        checkFollow
+        checkFollow,
+        countPublicacion
     }
