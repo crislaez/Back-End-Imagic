@@ -252,8 +252,37 @@ const countFollow = (id_usuario, callback) => {
     }
     // conexion.end();
 }
-// SELECT COUNT(*) AS file FROM seguir WHERE id_usuario_seguido = 20
-// SELECT COUNT(*) AS file FROM seguir WHERE id_usuario_seguidor = 20
+
+//dar like a las fotos
+const addLike = (like, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`INSERT INTO megusta SET ?`, like, (err, res) => {
+            if(err){
+                console.log(err.code);
+            }else{
+                callback(null, res);
+            }
+        })
+    }
+    // conexion.end();
+}
+
+//comprobar like por id usuario
+const getLikeById = (like, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`SELECT * FROM megusta WHERE id_usuario = ${conexion.escape(like.id_usuario)} AND id_foto = ${conexion.escape(like.id_foto)}`, (err, res) => {
+            if(err){
+                console.log(err.code);
+            }else{
+                callback(null, res);
+            }
+        })
+    }
+    // conexion.end();
+}
+
 module.exports = 
     {
         getAllUser,
@@ -272,5 +301,7 @@ module.exports =
         checkFollow,
         countPublicity,
         countFollower,
-        countFollow
+        countFollow,
+        addLike,
+        getLikeById
     }
