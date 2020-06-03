@@ -206,13 +206,43 @@ const checkFollow = (follow, callback) => {
         })
     }
     // conexion.end();
-}
+};
 
 //cuantas publicaciones a hecho el usuario
-const countPublicacion = (id_usuario, callback) => {
+const countPublicity = (id_usuario, callback) => {
     // conexion.connect();
     if(conexion){
-        conexion.query(`SELECT COUNT(*) FROM fotos WHERE id_usuario = ${conexion.escape(id_usuario)}`, (err, res) => {
+        conexion.query(`SELECT COUNT(*) AS files FROM fotos WHERE id_usuario = ${conexion.escape(id_usuario)}`, (err, res) => {
+            if(err){
+                console.log(err.code);
+            }else{
+                callback(null, res);
+            }
+        })
+    }
+    // conexion.end();
+};
+
+//cuantos seguidores se tiene
+const countFollower = (id_usuario, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`SELECT COUNT(*) AS files FROM seguir WHERE id_usuario_seguido = ${conexion.escape(id_usuario)}`, (err, res) => {
+            if(err){
+                console.log(err.code);
+            }else{
+                callback(null, res);
+            }
+        })
+    }
+    // conexion.end();
+};
+
+//a cuantas persinas sigue
+const countFollow = (id_usuario, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`SELECT COUNT(*) AS files FROM seguir WHERE id_usuario_seguidor = ${conexion.escape(id_usuario)}`, (err, res) => {
             if(err){
                 console.log(err.code);
             }else{
@@ -222,7 +252,8 @@ const countPublicacion = (id_usuario, callback) => {
     }
     // conexion.end();
 }
-
+// SELECT COUNT(*) AS file FROM seguir WHERE id_usuario_seguido = 20
+// SELECT COUNT(*) AS file FROM seguir WHERE id_usuario_seguidor = 20
 module.exports = 
     {
         getAllUser,
@@ -239,5 +270,7 @@ module.exports =
         addFollow,
         deleteFollow,
         checkFollow,
-        countPublicacion
+        countPublicity,
+        countFollower,
+        countFollow
     }

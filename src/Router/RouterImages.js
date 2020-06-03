@@ -60,17 +60,43 @@ function endPointImages(router){
         })
     });
 
-    //una imagen por ide imagen ruta -> http://localhost:3001/api/countPublicacion/:id
-    router.get('/countPublicacion/:id', (req, res) => {
+    //cuantas publicaciones ruta -> http://localhost:3001/api/countPublicity/:id
+    router.get('/countPublicity/:id', (req, res) => {
         let id = req.params.id;
 
-        Database.countPublicacion(id, (err, data) => {
+        Database.countPublicity(id, (err, data) => {
+            if(err) return res.status(500).json({message: `error al realizar la peticion: ${err}`});
+            if(!data) return res.status(404).json({message: `error al devolver los datos`});
+
+            res.status(200).json({success:true, data:data});
+        })
+    });
+
+    //cuantos seguidores ruta -> http://localhost:3001/api/countFollower/:id
+    router.get('/countFollower/:id', (req, res) => {
+        let id = req.params.id;
+
+        Database.countFollower(id, (err, data) => {
+            if(err) return res.status(500).json({message: `error al realizar la peticion: ${err}`});
+            if(!data) return res.status(404).json({message: `error al devolver los datos`});
+
+            res.status(200).json({success:true, data:data});
+        })
+    });
+
+    //a cuantos se sigue ruta -> http://localhost:3001/api/countFollow/:id
+    router.get('/countFollow/:id', (req, res) => {
+        let id = req.params.id;
+
+        Database.countFollow(id, (err, data) => {
             if(err) return res.status(500).json({message: `error al realizar la peticion: ${err}`});
             if(!data) return res.status(404).json({message: `error al devolver los datos`});
 
             res.status(200).json({success:true, data:data});
         })
     })
+
+
 }
 
 module.exports = endPointImages;
