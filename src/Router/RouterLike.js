@@ -31,8 +31,36 @@ function endPointLike(router){
                 id_usuario:req.params.id,
                 id_foto:req.params.id2
             }
-        console.log(like)
+
         Database.getLikeById(like, (err, data) => {
+            if(err) return res.status(500).json({message: `error al realizar la peticion: ${err}`});
+            if(!data) return res.status(404).json({message: `error al devolver los datos`});
+
+            res.status(200).json({success:true, data:data});
+        })
+    });
+
+    //comprobar likeruta -> http://localhost:3001/api/deleteLike
+    router.post('/deleteLike',(req, res) => {
+        let like = 
+            {
+                id_usuario:req.body.id_usuario,
+                id_foto:req.body.id_foto
+            }
+
+        Database.deleteLike(like, (err, data) => {
+            if(err) return res.status(500).json({message: `error al realizar la peticion: ${err}`});
+            if(!data) return res.status(404).json({message: `error al devolver los datos`});
+
+            res.status(200).json({success:true});
+        });
+    });
+
+    //likes por foto -> http://localhost:3001/api/getLikeByIdFoto/:id
+    router.get('/getLikeByIdFoto/:id',(req, res) => {
+        let id = req.params.id;
+
+        Database.getLikeByIdFoto(id, (err, data) => {
             if(err) return res.status(500).json({message: `error al realizar la peticion: ${err}`});
             if(!data) return res.status(404).json({message: `error al devolver los datos`});
 

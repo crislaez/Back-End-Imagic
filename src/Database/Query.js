@@ -283,6 +283,51 @@ const getLikeById = (like, callback) => {
     // conexion.end();
 }
 
+//borrar like
+const deleteLike = (like, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`DELETE FROM megusta WHERE id_usuario = ${conexion.escape(like.id_usuario)} AND id_foto = ${conexion.escape(like.id_foto)}`,(err, res) => {
+            if(err){
+                console.log(err.code);
+            }else{
+                callback(null, res);
+            }
+        })
+    }
+    // conexion.end();
+}
+
+//cuantos likes por foto
+const getLikeByIdFoto = (id, callback) => {
+    // c.connect();
+    if(conexion){
+        conexion.query(`SELECT COUNT(*) AS files FROM megusta WHERE id_foto = ${conexion.escape(id)}`, (err, res) => {
+            if(err){
+                console.log(err.code);
+            }else{
+                callback(null, res);
+            }
+        })
+    }
+    // conexion.end();
+}
+
+//conseguir los datos de los usuarios que se sigue para chat
+const addFollowByIdUser = (id, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`SELECT * FROM seguir INNER JOIN usuarios ON seguir.id_usuario_seguido = usuarios.id_usuario WHERE seguir.id_usuario_seguidor = ${conexion.escape(id)}`, (err, res) => {
+            if(err){
+                console.log(err.code);
+            }else{
+                callback(null, res)
+            }
+        })
+    }
+    // conexion.end();
+}
+
 module.exports = 
     {
         getAllUser,
@@ -303,5 +348,8 @@ module.exports =
         countFollower,
         countFollow,
         addLike,
-        getLikeById
+        getLikeById,
+        deleteLike,
+        getLikeByIdFoto,
+        addFollowByIdUser
     }
