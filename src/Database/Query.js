@@ -328,6 +328,36 @@ const addFollowByIdUser = (id, callback) => {
     // conexion.end();
 }
 
+//agregar mensajes chat
+const addChat = (chat, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`INSERT INTO chat SET ?`,chat, (err, res) => {
+            if(err){
+                console.log(err.code);
+            }else{
+                callback(null, res)
+            }
+        })
+    }
+    // conexion.end();
+}
+
+//todos los emnsajes del chat dle usuario
+const getChatByUsers = (chat, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`SELECT * FROM chat WHERE id_usuario_uno = ${conexion.escape(chat.id_usuario_uno)} AND id_usuario_dos = ${conexion.escape(chat.id_usuario_dos)} OR id_usuario_uno = ${conexion.escape(chat.id_usuario_dos)} AND id_usuario_dos = ${conexion.escape(chat.id_usuario_uno)}`, (err, res) => {
+            if(err){
+                console.log(err.code);
+            }else{
+                callback(null, res);
+            }
+        })
+    }
+    // conexion.end();
+}
+
 module.exports = 
     {
         getAllUser,
@@ -351,5 +381,7 @@ module.exports =
         getLikeById,
         deleteLike,
         getLikeByIdFoto,
-        addFollowByIdUser
+        addFollowByIdUser,
+        addChat,
+        getChatByUsers
     }

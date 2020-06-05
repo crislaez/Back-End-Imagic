@@ -1,3 +1,5 @@
+'use strict';
+
 const Database = require('../Database/Query');
 // const multipart = require('connect-multiparty');
 // const multipartMiddleware = multipart({uploadDir: __dirname + '/../img'}) // ./img es para carpeta donde se subira la foto
