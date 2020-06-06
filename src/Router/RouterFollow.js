@@ -65,8 +65,19 @@ function endPointFollow(router){
 
             res.status(200).json({success:true, data:data});
         })
-    })
-    
+    });
+
+    //usuarios que el usuario registredo no sigue ruta -> http://localhost:3001/api/getUserNotFolow/:id
+    router.get('/getUserNotFolow/:id', (req, res) => {
+        let id = req.params.id;
+
+        Database.getUserNotFolow(id, (err, data) => {
+            if(err) return res.status(500).json({message: `error al realizar la peticion: ${err}`});
+            if(!data) return res.status(404).json({message: `error al devolver los datos`});
+
+            res.status(200).json({success:true, data:data})
+        })
+    });   
 
 };
 

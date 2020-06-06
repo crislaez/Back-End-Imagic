@@ -95,8 +95,9 @@ const getImagenesById = (id, callback) => {
 //obtener todas las imagenes
 const getAllImagenes = (callback) => {
     // conexion.changeUser();
+    //SELECT * FROM fotos INNER JOIN usuarios ON fotos.id_usuario = usuarios.id_usuario
     if(conexion){
-        conexion.query(`SELECT * FROM fotos INNER JOIN usuarios ON fotos.id_usuario = usuarios.id_usuario`, (err, res) => {
+        conexion.query(`SELECT * FROM fotos INNER JOIN usuarios ON fotos.id_usuario = usuarios.id_usuario ORDER BY fotos.id_foto DESC`, (err, res) => {
             if(err){
                 console.log(err.code);
             }else{
@@ -358,6 +359,21 @@ const getChatByUsers = (chat, callback) => {
     // conexion.end();
 }
 
+//usuarios que no sigo yo
+const getUserNotFolow = (id, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`SELECT * FROM seguir INNER JOIN usuarios ON seguir.id_usuario_seguido = usuarios.id_usuario WHERE seguir.id_usuario_seguidor != ${conexion.escape(id)} GROUP BY seguir.id_usuario_seguido`, (err, res) => {
+            if(err){
+                console.log(err)
+            }else{
+                callback(null, res);
+            }
+        })
+    }
+    // conexion.end();
+};
+
 module.exports = 
     {
         getAllUser,
@@ -383,5 +399,6 @@ module.exports =
         getLikeByIdFoto,
         addFollowByIdUser,
         addChat,
-        getChatByUsers
+        getChatByUsers,
+        getUserNotFolow
     }
