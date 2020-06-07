@@ -374,6 +374,21 @@ const getUserNotFolow = (id, callback) => {
     // conexion.end();
 };
 
+//borrar comentario
+const deleteComent = (id, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`DELETE FROM comentarios WHERE id_comentario = ${conexion.escape(id)}`, (err, res) => {
+            if(err){
+                console.log(err.code);
+            }else{
+                callback(null, res);
+            }
+        })
+    }
+    // conexion.end();
+};
+
 module.exports = 
     {
         getAllUser,
@@ -400,5 +415,6 @@ module.exports =
         addFollowByIdUser,
         addChat,
         getChatByUsers,
-        getUserNotFolow
+        getUserNotFolow,
+        deleteComent
     }
