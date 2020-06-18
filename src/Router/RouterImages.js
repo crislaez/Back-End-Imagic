@@ -7,14 +7,15 @@ const multipartMiddleware = multipart({uploadDir: __dirname + '/../img'}) // ./i
 function endPointImages(router){
 
     //ingresar foto ruta -> http://localhost:3001/api/addImagen
-    router.post('/addImagen',multipartMiddleware, (req, res) => {
-
-        let aux = req.files.foto.path.split('\\');        
+    router.post('/addImagen',multipartMiddleware, (req, res) => {        
+        let aux = req.files.foto.path.split('\\');   
+        let num = aux.length;
+  
         let imagen = 
             {
                id_usuario:req.body.id_usuario,
                id_foto:'',
-               foto:'http://localhost:3001/img/'+aux[8],
+               foto:'http://localhost:3001/img/'+aux[num-1],
                texto_foto:req.body.texto_foto
             }
 

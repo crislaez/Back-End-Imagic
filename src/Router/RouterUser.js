@@ -19,6 +19,8 @@ function endPointUser(router){
     //agregar usuario  ruta -> http://localhost:3001/api/addUser
     router.post('/addUser',multipartMiddleware,(req, res) => {
         let aux = req.files.avatar.path.split('\\');
+        let num = aux.length;
+
         let user = 
             {
                 id_usuario:'',
@@ -27,7 +29,7 @@ function endPointUser(router){
                 nombre_usuario:req.body.nombre_usuario,
                 correo:req.body.correo,
                 clave:req.body.clave,
-                avatar:'http://localhost:3001/img/'+aux[8]
+                avatar:'http://localhost:3001/img/'+aux[num-1]
             };
         
         Database.addUser(user, (err, data) => {
